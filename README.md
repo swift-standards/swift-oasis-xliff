@@ -1,0 +1,35 @@
+# swift-oasis-xliff
+
+Use this package when you hand words to translators and take their translations back in XLIFF, the OASIS XML Localisation Interchange File Format, version 2.1. Build a document from source and target pairs with `XLIFF.Document(source:target:file:units:)`, write it with `document.bytes`, read the translated file with `XLIFF.Document(parsing:)`, and take the translations by unit id from `document.targets` or `document.target(of:)`. The document is a tree of typed values (`XLIFF.File`, `XLIFF.Group`, `XLIFF.Unit`, `XLIFF.Segment`, `XLIFF.Source`, `XLIFF.Target`, `XLIFF.Note`, `XLIFF.Inline`) and languages are `BCP47.LanguageTag`. The XML itself is read and written by swift-w3c-xml.
+
+```swift
+let file = try XLIFF.Document(
+    source: BCP47.LanguageTag("en"),
+    target: BCP47.LanguageTag("nl"),
+    units: [XLIFF.Unit(id: "browse", source: "Browse")]
+)
+send(file.bytes)
+
+let translated = try XLIFF.Document(parsing: received)
+translated.target(of: "browse")   // "Bladeren"
+```
+
+## Laws
+
+- `XLIFF.Document(parsing:)` reads documents in the XLIFF 2 core namespace, `urn:oasis:names:tc:xliff:document:2.0`, whose `version` is `2.0` or `2.1`. Any other version, root element or namespace fails. The core namespace may be the default namespace or bound to a prefix.
+- Reading also validates. A document that breaks a constraint of XLIFF Core fails with an `XLIFF.Error` that names the constraint, and `document.validate()` runs the same checks on a document built in Swift. Every invalid core document of the OASIS XLIFF 2.1 test suite fails with the error it was written for, with four exceptions that read without error: `bad_DifferentXmlSpace.xlf`, because the specification sets no constraint on a source and target with different `xml:space`, and the three Format Style documents, because module attributes are not checked.
+- Every valid document of the OASIS XLIFF 2.1 test suite, core, in-out and modules alike, is read, and its `bytes` read back to an equal document.
+- The editing hints are errors whatever the `state` of a segment, as the test suite holds them: a code with `canReorder` set to `no` or `firstNo` must have `canCopy` and `canDelete` set to `no`; a non-reorderable sequence must start with `firstNo` and appear unchanged in the segment's target; and a code with `canDelete` set to `no` must appear in the target of its own segment when that segment has a target.
+- An inline element of a target may share its id only with the element of the same kind in the source of its own segment or ignorable. Every other id among segments, ignorables and inline elements is unique in its unit.
+- Module and extension elements are kept as written. Each one is made self-contained when read, declaring the namespaces it uses, so it can be written anywhere. Only their placement is checked: which module elements a file, group or unit may hold and how many, and that ids in custom extensions are unique within their file, group or unit. The content of the Translation Candidates, Glossary, Format Style, Metadata, Resource Data, Change Tracking, Size and Length Restriction, Validation and ITS modules is not checked, so the module documents the test suite marks invalid are read without error.
+- Attributes from other namespaces are allowed where the specification allows them: on `xliff`, `file`, `group`, `unit` and `note` from any namespace, on `mrk` and `sm` from any namespace but XML's, and on `ph`, `pc`, `sc` and `ec` only from the Format Style and Size and Length Restriction modules.
+- Attributes keep their presence: one that was written with its default value is written again, one that was absent stays absent.
+- Comments and processing instructions inside the `xliff` element are dropped, as the specification lets agents do. Those before and after it are kept. CDATA sections are read as text and written as escaped text.
+- Whitespace between structural elements is not kept. Writing indents every structural element by two spaces a level and leaves the content of `source`, `target`, `note` and `data` exactly as it is.
+- Characters XML cannot hold are written as `cp` elements, and a `cp` may only hold such a character or one of the C1 controls XML discourages.
+- A unit's target text follows the `order` of its targets. An ignorable without a target contributes its source, and a unit with a segment that has no target has no target text. Plain text joins text, the characters of `cp`, the content of `pc` and `mrk`, and the `equiv`, `equivStart` and `equivEnd` of codes, which default to nothing. A `cp` that holds a surrogate becomes U+FFFD.
+- `document.targets` and `document.target(of:)` take the first unit with a given id, in document order across files.
+- Languages are compared without regard to case. The `xml:lang` of a source or target is its own, or inherited from its unit, group, file or the `xliff` element, and must equal `srcLang` or `trgLang`.
+- A fragment identifier in the `ref` of `mrk` or `sm` follows the grammar of section 3 of the specification, and a comment annotation's `ref` points to a note of its own unit. Its last selector may use the prefix of a core element, of an OASIS module, or of an extension registered with the XLIFF TC and passed as `prefixes:` to `XLIFF.Document(parsing:prefixes:)` or `validate(prefixes:)`, mapping each prefix to its namespace. The test suite's own registry, `extra-prefixes.properties`, is passed this way for its valid documents.
+
+The tests read the documents of the OASIS XLIFF TC's XLIFF 2.1 test suite, from `xliff-21/test-suite` in [oasis-tcs/xliff-xliff-22](https://github.com/oasis-tcs/xliff-xliff-22), contributed under the OASIS IPR Policy. Copyright © OASIS Open.
