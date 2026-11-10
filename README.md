@@ -1,18 +1,6 @@
 # swift-oasis-xliff
 
-Use this package when you hand words to translators and take their translations back in XLIFF, the OASIS XML Localisation Interchange File Format, version 2.1. Build a document from source and target pairs with `XLIFF.Document(source:target:file:units:)`, write it with `document.bytes`, read the translated file with `XLIFF.Document(parsing:)`, and take the translations by unit id from `document.targets` or `document.target(of:)`. The document is a tree of typed values (`XLIFF.File`, `XLIFF.Group`, `XLIFF.Unit`, `XLIFF.Segment`, `XLIFF.Source`, `XLIFF.Target`, `XLIFF.Note`, `XLIFF.Inline`) and languages are `BCP47.LanguageTag`. The XML itself is read and written by swift-w3c-xml.
-
-```swift
-let file = try XLIFF.Document(
-    source: BCP47.LanguageTag("en"),
-    target: BCP47.LanguageTag("nl"),
-    units: [XLIFF.Unit(id: "browse", source: "Browse")]
-)
-send(file.bytes)
-
-let translated = try XLIFF.Document(parsing: received)
-translated.target(of: "browse")   // "Bladeren"
-```
+Use this package when you hand words to translators and take their translations back in XLIFF 2.1, the OASIS XML Localisation Interchange File Format. Build a document from source and target pairs with `XLIFF.Document(source:target:file:units:)` and `XLIFF.Unit(id:source:target:)`, write it with `document.bytes`, read the translated file with `XLIFF.Document(parsing:)`, and take the translations by unit id from `document.targets` or `document.target(of:)`. The document is a tree of typed values, from `XLIFF.File`, `XLIFF.Group` and `XLIFF.Unit` down to `XLIFF.Segment`, `XLIFF.Source`, `XLIFF.Target`, `XLIFF.Note` and the inline content `XLIFF.Inline`; languages are `BCP47.LanguageTag`, and swift-w3c-xml reads and writes the XML.
 
 ## Laws
 
