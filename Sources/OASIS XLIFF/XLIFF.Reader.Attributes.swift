@@ -82,10 +82,10 @@ extension XLIFF.Reader.Attributes {
         return result
     }
 
-    mutating func reference(_ name: String) throws(XLIFF.Error) -> RFC_3987.IRI.Reference? {
+    mutating func reference(_ name: String) throws(XLIFF.Error) -> IETF.RFC.`3987`.IRI.Reference? {
         guard let value = string(name) else { return nil }
         do {
-            return try RFC_3987.IRI.Reference(value)
+            return try IETF.RFC.`3987`.IRI.Reference(value)
         } catch {
             throw .invalidValue(value, attribute: name, on: element)
         }

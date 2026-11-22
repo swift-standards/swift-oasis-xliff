@@ -5,14 +5,14 @@ extension XLIFF {
 
     public struct Skeleton: Sendable, Hashable {
 
-        public var href: RFC_3987.IRI.Reference?
+        public var href: IETF.RFC.`3987`.IRI.Reference?
 
         public var namespaces: [W3C.XML.Namespace]
 
         public var content: [W3C.XML.Content]
 
         public init(
-            href: RFC_3987.IRI.Reference? = nil,
+            href: IETF.RFC.`3987`.IRI.Reference? = nil,
             namespaces: [W3C.XML.Namespace] = [],
             content: [W3C.XML.Content] = []
         ) {

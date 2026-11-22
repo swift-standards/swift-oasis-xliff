@@ -7,7 +7,7 @@ extension XLIFF {
 
         public var id: XLIFF.Identifier
 
-        public var original: RFC_3987.IRI.Reference?
+        public var original: IETF.RFC.`3987`.IRI.Reference?
 
         public var canResegment: Bool?
 
@@ -31,7 +31,7 @@ extension XLIFF {
 
         public init(
             id: XLIFF.Identifier,
-            original: RFC_3987.IRI.Reference? = nil,
+            original: IETF.RFC.`3987`.IRI.Reference? = nil,
             canResegment: Bool? = nil,
             translate: Bool? = nil,
             sourceDirection: XLIFF.Direction? = nil,
