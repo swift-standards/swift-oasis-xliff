@@ -3,7 +3,7 @@ import W3C_XML
 extension XLIFF.Reader {
 
     func inline(
-        _ element: W3C_XML::W3C_XML.Element,
+        _ element: W3C.XML.Element,
         scope: XLIFF.Scope,
         codes: Bool
     ) throws(XLIFF.Error) -> [XLIFF.Inline] {
@@ -37,7 +37,7 @@ extension XLIFF.Reader {
         return result
     }
 
-    func codePoint(_ element: W3C_XML::W3C_XML.Element, scope: XLIFF.Scope) throws(XLIFF.Error) -> XLIFF.CodePoint {
+    func codePoint(_ element: W3C.XML.Element, scope: XLIFF.Scope) throws(XLIFF.Error) -> XLIFF.CodePoint {
         var attributes = try Attributes(element, scope: scope)
         let hex = try attributes.required("hex")
         try attributes.finish()
@@ -48,7 +48,7 @@ extension XLIFF.Reader {
         return point
     }
 
-    func empty(_ element: W3C_XML::W3C_XML.Element) throws(XLIFF.Error) {
+    func empty(_ element: W3C.XML.Element) throws(XLIFF.Error) {
         for item in element.content {
             switch item {
             case .element(let child):
@@ -63,7 +63,7 @@ extension XLIFF.Reader {
         }
     }
 
-    func code(_ element: W3C_XML::W3C_XML.Element, scope: XLIFF.Scope, in parent: String) throws(XLIFF.Error) -> XLIFF.Inline {
+    func code(_ element: W3C.XML.Element, scope: XLIFF.Scope, in parent: String) throws(XLIFF.Error) -> XLIFF.Inline {
         var attributes = try Attributes(element, scope: scope)
         let declarations = Self.declarations(element)
         switch element.name.local {

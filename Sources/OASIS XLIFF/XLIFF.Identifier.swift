@@ -25,6 +25,6 @@ extension XLIFF.Identifier: CustomStringConvertible {
 extension XLIFF.Identifier {
 
     var isToken: Bool {
-        !value.isEmpty && XLIFF.scalars(value).allSatisfy(W3C_XML::W3C_XML.isNameChar)
+        !value.isEmpty && XLIFF.scalars(value).allSatisfy(W3C.XML.isNameChar)
     }
 }

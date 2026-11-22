@@ -7,14 +7,14 @@ extension XLIFF {
 
         public var href: RFC_3987.IRI.Reference?
 
-        public var namespaces: [W3C_XML::W3C_XML.Namespace]
+        public var namespaces: [W3C.XML.Namespace]
 
-        public var content: [W3C_XML::W3C_XML.Content]
+        public var content: [W3C.XML.Content]
 
         public init(
             href: RFC_3987.IRI.Reference? = nil,
-            namespaces: [W3C_XML::W3C_XML.Namespace] = [],
-            content: [W3C_XML::W3C_XML.Content] = []
+            namespaces: [W3C.XML.Namespace] = [],
+            content: [W3C.XML.Content] = []
         ) {
             self.href = href
             self.namespaces = namespaces

@@ -4,16 +4,16 @@ extension XLIFF {
 
     public struct Extensions: Sendable, Hashable {
 
-        public var namespaces: [W3C_XML::W3C_XML.Namespace]
+        public var namespaces: [W3C.XML.Namespace]
 
-        public var attributes: [W3C_XML::W3C_XML.Attribute]
+        public var attributes: [W3C.XML.Attribute]
 
-        public var elements: [W3C_XML::W3C_XML.Element]
+        public var elements: [W3C.XML.Element]
 
         public init(
-            namespaces: [W3C_XML::W3C_XML.Namespace] = [],
-            attributes: [W3C_XML::W3C_XML.Attribute] = [],
-            elements: [W3C_XML::W3C_XML.Element] = []
+            namespaces: [W3C.XML.Namespace] = [],
+            attributes: [W3C.XML.Attribute] = [],
+            elements: [W3C.XML.Element] = []
         ) {
             self.namespaces = namespaces
             self.attributes = attributes

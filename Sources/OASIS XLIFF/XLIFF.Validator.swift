@@ -125,7 +125,7 @@ extension XLIFF.Validator {
 
     func text(_ value: String?, in element: String) throws(XLIFF.Error) {
         guard let value else { return }
-        guard XLIFF.scalars(value).allSatisfy(W3C_XML::W3C_XML.isChar) else {
+        guard XLIFF.scalars(value).allSatisfy(W3C.XML.isChar) else {
             throw .invalidCharacter(in: element)
         }
     }
@@ -215,7 +215,7 @@ extension XLIFF.Validator {
         }
     }
 
-    func extensionIdentifiers(_ element: W3C_XML::W3C_XML.Element, into identifiers: inout Set<String>) throws(XLIFF.Error) {
+    func extensionIdentifiers(_ element: W3C.XML.Element, into identifiers: inout Set<String>) throws(XLIFF.Error) {
         for attribute in element.attributes
         where (attribute.name.prefix == nil && attribute.name.local == "id")
             || (attribute.name.prefix == "xml" && attribute.name.local == "id")

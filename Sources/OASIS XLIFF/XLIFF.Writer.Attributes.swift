@@ -4,7 +4,7 @@ extension XLIFF.Writer {
 
     struct Attributes {
 
-        var list: [W3C_XML::W3C_XML.Attribute] = []
+        var list: [W3C.XML.Attribute] = []
     }
 }
 
@@ -12,13 +12,13 @@ extension XLIFF.Writer.Attributes {
 
     mutating func add(_ name: String, _ value: String?) {
         if let value {
-            list.append(W3C_XML::W3C_XML.Attribute(name: W3C_XML::W3C_XML.Name(local: name), value: value))
+            list.append(W3C.XML.Attribute(name: W3C.XML.Name(local: name), value: value))
         }
     }
 
     mutating func add(xml name: String, _ value: String?) {
         if let value {
-            list.append(W3C_XML::W3C_XML.Attribute(name: W3C_XML::W3C_XML.Name(local: name, prefix: "xml"), value: value))
+            list.append(W3C.XML.Attribute(name: W3C.XML.Name(local: name, prefix: "xml"), value: value))
         }
     }
 

@@ -9,7 +9,7 @@ extension XLIFF {
 
 extension XLIFF.Writer {
 
-    func document(_ document: XLIFF.Document) -> W3C_XML::W3C_XML.Document {
+    func document(_ document: XLIFF.Document) -> W3C.XML.Document {
         var attributes = Attributes()
         attributes.add("version", document.version)
         attributes.add("srcLang", document.sourceLanguage.value)
@@ -20,12 +20,12 @@ extension XLIFF.Writer {
         let root = structure(
             "xliff",
             attributes: attributes,
-            namespaces: [W3C_XML::W3C_XML.Namespace(uri: XLIFF.Namespace.core)] + Self.prefixed(document.extensions.namespaces),
+            namespaces: [W3C.XML.Namespace(uri: XLIFF.Namespace.core)] + Self.prefixed(document.extensions.namespaces),
             children: document.files.map { file($0, depth: 1) },
             depth: 0
         )
-        return W3C_XML::W3C_XML.Document(
-            declaration: W3C_XML::W3C_XML.Declaration(version: .v1_0, encoding: "UTF-8"),
+        return W3C.XML.Document(
+            declaration: W3C.XML.Declaration(version: .v1_0, encoding: "UTF-8"),
             root: root,
             prologue: document.prologue,
             epilogue: document.epilogue
@@ -35,18 +35,18 @@ extension XLIFF.Writer {
 
 extension XLIFF.Writer {
 
-    static func prefixed(_ namespaces: [W3C_XML::W3C_XML.Namespace]) -> [W3C_XML::W3C_XML.Namespace] {
+    static func prefixed(_ namespaces: [W3C.XML.Namespace]) -> [W3C.XML.Namespace] {
         namespaces.filter { $0.prefix != nil }
     }
 
     func structure(
         _ name: String,
         attributes: Attributes,
-        namespaces: [W3C_XML::W3C_XML.Namespace],
-        children: [W3C_XML::W3C_XML.Element],
+        namespaces: [W3C.XML.Namespace],
+        children: [W3C.XML.Element],
         depth: Int
-    ) -> W3C_XML::W3C_XML.Element {
-        var content: [W3C_XML::W3C_XML.Content] = []
+    ) -> W3C.XML.Element {
+        var content: [W3C.XML.Content] = []
         for child in children {
             content.append(.text("\n" + String(repeating: "  ", count: depth + 1)))
             content.append(.element(child))
@@ -54,15 +54,15 @@ extension XLIFF.Writer {
         if !children.isEmpty {
             content.append(.text("\n" + String(repeating: "  ", count: depth)))
         }
-        return W3C_XML::W3C_XML.Element(
-            name: W3C_XML::W3C_XML.Name(local: name),
+        return W3C.XML.Element(
+            name: W3C.XML.Name(local: name),
             attributes: attributes.list,
             content: content,
             namespaces: namespaces
         )
     }
 
-    func file(_ file: XLIFF.File, depth: Int) -> W3C_XML::W3C_XML.Element {
+    func file(_ file: XLIFF.File, depth: Int) -> W3C.XML.Element {
         var attributes = Attributes()
         attributes.add("id", file.id)
         attributes.add("canResegment", file.canResegment)
@@ -73,13 +73,13 @@ extension XLIFF.Writer {
         attributes.add(xml: "lang", file.language?.value)
         attributes.add(xml: "space", file.space)
         attributes.list += file.extensions.attributes
-        var children: [W3C_XML::W3C_XML.Element] = []
+        var children: [W3C.XML.Element] = []
         if let skeleton = file.skeleton {
             var skeletonAttributes = Attributes()
             skeletonAttributes.add("href", skeleton.href?.value)
             children.append(
-                W3C_XML::W3C_XML.Element(
-                    name: W3C_XML::W3C_XML.Name(local: "skeleton"),
+                W3C.XML.Element(
+                    name: W3C.XML.Name(local: "skeleton"),
                     attributes: skeletonAttributes.list,
                     content: skeleton.content,
                     namespaces: Self.prefixed(skeleton.namespaces)
@@ -100,14 +100,14 @@ extension XLIFF.Writer {
         )
     }
 
-    func node(_ node: XLIFF.Node, depth: Int) -> W3C_XML::W3C_XML.Element {
+    func node(_ node: XLIFF.Node, depth: Int) -> W3C.XML.Element {
         switch node {
         case .unit(let unit): self.unit(unit, depth: depth)
         case .group(let group): self.group(group, depth: depth)
         }
     }
 
-    func group(_ group: XLIFF.Group, depth: Int) -> W3C_XML::W3C_XML.Element {
+    func group(_ group: XLIFF.Group, depth: Int) -> W3C.XML.Element {
         var attributes = Attributes()
         attributes.add("id", group.id)
         attributes.add("name", group.name)
@@ -133,7 +133,7 @@ extension XLIFF.Writer {
         )
     }
 
-    func unit(_ unit: XLIFF.Unit, depth: Int) -> W3C_XML::W3C_XML.Element {
+    func unit(_ unit: XLIFF.Unit, depth: Int) -> W3C.XML.Element {
         var attributes = Attributes()
         attributes.add("id", unit.id)
         attributes.add("name", unit.name)
@@ -203,7 +203,7 @@ extension XLIFF.Writer {
         )
     }
 
-    func notes(_ notes: [XLIFF.Note], depth: Int) -> W3C_XML::W3C_XML.Element {
+    func notes(_ notes: [XLIFF.Note], depth: Int) -> W3C.XML.Element {
         structure(
             "notes",
             attributes: Attributes(),
@@ -215,8 +215,8 @@ extension XLIFF.Writer {
                 attributes.add("category", note.category)
                 attributes.add("priority", note.priority)
                 attributes.list += note.extensions.attributes
-                return W3C_XML::W3C_XML.Element(
-                    name: W3C_XML::W3C_XML.Name(local: "note"),
+                return W3C.XML.Element(
+                    name: W3C.XML.Name(local: "note"),
                     attributes: attributes.list,
                     content: note.text.isEmpty ? [] : [.text(note.text)],
                     namespaces: Self.prefixed(note.extensions.namespaces)
@@ -226,13 +226,13 @@ extension XLIFF.Writer {
         )
     }
 
-    func data(_ data: XLIFF.Data) -> W3C_XML::W3C_XML.Element {
+    func data(_ data: XLIFF.Data) -> W3C.XML.Element {
         var attributes = Attributes()
         attributes.add("id", data.id)
         attributes.add("dir", data.direction)
         attributes.add(xml: "space", data.space)
-        return W3C_XML::W3C_XML.Element(
-            name: W3C_XML::W3C_XML.Name(local: "data"),
+        return W3C.XML.Element(
+            name: W3C.XML.Name(local: "data"),
             attributes: attributes.list,
             content: inline(data.content),
             namespaces: Self.prefixed(data.namespaces)
@@ -242,17 +242,17 @@ extension XLIFF.Writer {
     func pair(
         _ name: String,
         attributes: Attributes,
-        namespaces: [W3C_XML::W3C_XML.Namespace],
+        namespaces: [W3C.XML.Namespace],
         source: XLIFF.Source,
         target: XLIFF.Target?,
         depth: Int
-    ) -> W3C_XML::W3C_XML.Element {
+    ) -> W3C.XML.Element {
         var sourceAttributes = Attributes()
         sourceAttributes.add(xml: "lang", source.language?.value)
         sourceAttributes.add(xml: "space", source.space)
         var children = [
-            W3C_XML::W3C_XML.Element(
-                name: W3C_XML::W3C_XML.Name(local: "source"),
+            W3C.XML.Element(
+                name: W3C.XML.Name(local: "source"),
                 attributes: sourceAttributes.list,
                 content: inline(source.content),
                 namespaces: Self.prefixed(source.namespaces)
@@ -264,8 +264,8 @@ extension XLIFF.Writer {
             targetAttributes.add(xml: "space", target.space)
             targetAttributes.add("order", target.order)
             children.append(
-                W3C_XML::W3C_XML.Element(
-                    name: W3C_XML::W3C_XML.Name(local: "target"),
+                W3C.XML.Element(
+                    name: W3C.XML.Name(local: "target"),
                     attributes: targetAttributes.list,
                     content: inline(target.content),
                     namespaces: Self.prefixed(target.namespaces)

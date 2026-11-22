@@ -19,9 +19,9 @@ extension XLIFF {
 
         public var files: [XLIFF.File]
 
-        public var prologue: [W3C_XML::W3C_XML.Content]
+        public var prologue: [W3C.XML.Content]
 
-        public var epilogue: [W3C_XML::W3C_XML.Content]
+        public var epilogue: [W3C.XML.Content]
 
         public init(
             version: XLIFF.Version = .v2_1,
@@ -31,8 +31,8 @@ extension XLIFF {
             language: BCP47.LanguageTag? = nil,
             extensions: XLIFF.Extensions = XLIFF.Extensions(),
             files: [XLIFF.File],
-            prologue: [W3C_XML::W3C_XML.Content] = [],
-            epilogue: [W3C_XML::W3C_XML.Content] = []
+            prologue: [W3C.XML.Content] = [],
+            epilogue: [W3C.XML.Content] = []
         ) {
             self.version = version
             self.sourceLanguage = sourceLanguage

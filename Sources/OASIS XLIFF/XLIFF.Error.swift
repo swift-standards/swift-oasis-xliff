@@ -4,7 +4,7 @@ extension XLIFF {
 
     public enum Error: Swift::Error, Sendable, Equatable {
 
-        case xml(W3C_XML::W3C_XML.Parse.Error)
+        case xml(W3C.XML.Parse.Error)
 
         case unexpectedRoot(String)
 

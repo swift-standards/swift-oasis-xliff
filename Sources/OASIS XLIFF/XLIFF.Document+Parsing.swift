@@ -6,9 +6,9 @@ extension XLIFF.Document {
         parsing bytes: Bytes,
         prefixes: [String: String] = [:]
     ) throws(XLIFF.Error) {
-        let xml: W3C_XML::W3C_XML.Document
-        do throws(W3C_XML::W3C_XML.Parse.Error) {
-            xml = try W3C_XML::W3C_XML.parse(bytes)
+        let xml: W3C.XML.Document
+        do throws(W3C.XML.Parse.Error) {
+            xml = try W3C.XML.parse(bytes)
         } catch {
             throw .xml(error)
         }

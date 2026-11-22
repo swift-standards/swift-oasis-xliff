@@ -11,7 +11,7 @@ extension XLIFF {
 
         public var order: UInt?
 
-        public var namespaces: [W3C_XML::W3C_XML.Namespace]
+        public var namespaces: [W3C.XML.Namespace]
 
         public var content: [XLIFF.Inline]
 
@@ -19,7 +19,7 @@ extension XLIFF {
             language: BCP47.LanguageTag? = nil,
             space: XLIFF.Space? = nil,
             order: UInt? = nil,
-            namespaces: [W3C_XML::W3C_XML.Namespace] = [],
+            namespaces: [W3C.XML.Namespace] = [],
             content: [XLIFF.Inline] = []
         ) {
             self.language = language

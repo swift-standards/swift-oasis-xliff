@@ -299,7 +299,7 @@ extension `XLIFF.Document Tests`.Test.`Edge Case` {
             """
         let document = try `XLIFF.Document Tests`.parse(text)
         let element = try #require(document.files[0].extensions.elements.first)
-        #expect(element.namespaces == [W3C_XML::W3C_XML.Namespace(prefix: "my", uri: "urn:my")])
+        #expect(element.namespaces == [W3C.XML.Namespace(prefix: "my", uri: "urn:my")])
         #expect(try XLIFF.Document(parsing: document.bytes) == document)
     }
 

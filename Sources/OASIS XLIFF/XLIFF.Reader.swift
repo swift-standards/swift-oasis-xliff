@@ -9,7 +9,7 @@ extension XLIFF {
 
 extension XLIFF.Reader {
 
-    func document(_ xml: W3C_XML::W3C_XML.Document) throws(XLIFF.Error) -> XLIFF.Document {
+    func document(_ xml: W3C.XML.Document) throws(XLIFF.Error) -> XLIFF.Document {
         let root = xml.root
         let scope = XLIFF.Scope().adding(root.namespaces)
         guard try scope.isCore(root), root.name.local == "xliff" else {
@@ -51,12 +51,12 @@ extension XLIFF.Reader {
 
 extension XLIFF.Reader {
 
-    static func declarations(_ element: W3C_XML::W3C_XML.Element) -> [W3C_XML::W3C_XML.Namespace] {
+    static func declarations(_ element: W3C.XML.Element) -> [W3C.XML.Namespace] {
         element.namespaces.filter { $0.prefix != nil }
     }
 
-    func structural(_ element: W3C_XML::W3C_XML.Element, scope: XLIFF.Scope) throws(XLIFF.Error) -> [W3C_XML::W3C_XML.Element] {
-        var result: [W3C_XML::W3C_XML.Element] = []
+    func structural(_ element: W3C.XML.Element, scope: XLIFF.Scope) throws(XLIFF.Error) -> [W3C.XML.Element] {
+        var result: [W3C.XML.Element] = []
         for item in element.content {
             switch item {
             case .element(let child):
@@ -74,7 +74,7 @@ extension XLIFF.Reader {
         return result
     }
 
-    func file(_ element: W3C_XML::W3C_XML.Element, scope outer: XLIFF.Scope) throws(XLIFF.Error) -> XLIFF.File {
+    func file(_ element: W3C.XML.Element, scope outer: XLIFF.Scope) throws(XLIFF.Error) -> XLIFF.File {
         let scope = outer.adding(element.namespaces)
         var attributes = try Attributes(element, scope: scope)
         let id = try XLIFF.Identifier(attributes.required("id"))
@@ -135,12 +135,12 @@ extension XLIFF.Reader {
         )
     }
 
-    func skeleton(_ element: W3C_XML::W3C_XML.Element, scope outer: XLIFF.Scope) throws(XLIFF.Error) -> XLIFF.Skeleton {
+    func skeleton(_ element: W3C.XML.Element, scope outer: XLIFF.Scope) throws(XLIFF.Error) -> XLIFF.Skeleton {
         let scope = outer.adding(element.namespaces)
         var attributes = try Attributes(element, scope: scope)
         let href = try attributes.reference("href")
         try attributes.finish()
-        var content: [W3C_XML::W3C_XML.Content] = []
+        var content: [W3C.XML.Content] = []
         for item in element.content {
             switch item {
             case .element(let child):
@@ -163,7 +163,7 @@ extension XLIFF.Reader {
         return XLIFF.Skeleton(href: href, namespaces: Self.declarations(element), content: content)
     }
 
-    func group(_ element: W3C_XML::W3C_XML.Element, scope outer: XLIFF.Scope) throws(XLIFF.Error) -> XLIFF.Group {
+    func group(_ element: W3C.XML.Element, scope outer: XLIFF.Scope) throws(XLIFF.Error) -> XLIFF.Group {
         let scope = outer.adding(element.namespaces)
         var attributes = try Attributes(element, scope: scope)
         let id = try XLIFF.Identifier(attributes.required("id"))
@@ -218,7 +218,7 @@ extension XLIFF.Reader {
         )
     }
 
-    func unit(_ element: W3C_XML::W3C_XML.Element, scope outer: XLIFF.Scope) throws(XLIFF.Error) -> XLIFF.Unit {
+    func unit(_ element: W3C.XML.Element, scope outer: XLIFF.Scope) throws(XLIFF.Error) -> XLIFF.Unit {
         let scope = outer.adding(element.namespaces)
         var attributes = try Attributes(element, scope: scope)
         let id = try XLIFF.Identifier(attributes.required("id"))
@@ -279,7 +279,7 @@ extension XLIFF.Reader {
         )
     }
 
-    func notes(_ element: W3C_XML::W3C_XML.Element, scope outer: XLIFF.Scope) throws(XLIFF.Error) -> [XLIFF.Note] {
+    func notes(_ element: W3C.XML.Element, scope outer: XLIFF.Scope) throws(XLIFF.Error) -> [XLIFF.Note] {
         let scope = outer.adding(element.namespaces)
         try Attributes(element, scope: scope).finish()
         var result: [XLIFF.Note] = []
@@ -294,9 +294,9 @@ extension XLIFF.Reader {
     }
 
     func note(
-        _ element: W3C_XML::W3C_XML.Element,
+        _ element: W3C.XML.Element,
         scope outer: XLIFF.Scope,
-        inherited: [W3C_XML::W3C_XML.Namespace]
+        inherited: [W3C.XML.Namespace]
     ) throws(XLIFF.Error) -> XLIFF.Note {
         let scope = outer.adding(element.namespaces)
         var attributes = try Attributes(element, scope: scope)
@@ -315,7 +315,7 @@ extension XLIFF.Reader {
         )
     }
 
-    func text(_ element: W3C_XML::W3C_XML.Element) throws(XLIFF.Error) -> String {
+    func text(_ element: W3C.XML.Element) throws(XLIFF.Error) -> String {
         var result = ""
         for item in element.content {
             switch item {
@@ -332,7 +332,7 @@ extension XLIFF.Reader {
         return result
     }
 
-    func originalData(_ element: W3C_XML::W3C_XML.Element, scope outer: XLIFF.Scope) throws(XLIFF.Error) -> [XLIFF.Data] {
+    func originalData(_ element: W3C.XML.Element, scope outer: XLIFF.Scope) throws(XLIFF.Error) -> [XLIFF.Data] {
         let scope = outer.adding(element.namespaces)
         try Attributes(element, scope: scope).finish()
         var result: [XLIFF.Data] = []
@@ -360,7 +360,7 @@ extension XLIFF.Reader {
         return result
     }
 
-    func segment(_ element: W3C_XML::W3C_XML.Element, scope outer: XLIFF.Scope) throws(XLIFF.Error) -> XLIFF.Segment {
+    func segment(_ element: W3C.XML.Element, scope outer: XLIFF.Scope) throws(XLIFF.Error) -> XLIFF.Segment {
         let scope = outer.adding(element.namespaces)
         var attributes = try Attributes(element, scope: scope)
         let id = attributes.identifier("id")
@@ -380,7 +380,7 @@ extension XLIFF.Reader {
         )
     }
 
-    func ignorable(_ element: W3C_XML::W3C_XML.Element, scope outer: XLIFF.Scope) throws(XLIFF.Error) -> XLIFF.Ignorable {
+    func ignorable(_ element: W3C.XML.Element, scope outer: XLIFF.Scope) throws(XLIFF.Error) -> XLIFF.Ignorable {
         let scope = outer.adding(element.namespaces)
         var attributes = try Attributes(element, scope: scope)
         let id = attributes.identifier("id")
@@ -390,7 +390,7 @@ extension XLIFF.Reader {
     }
 
     func pair(
-        _ element: W3C_XML::W3C_XML.Element,
+        _ element: W3C.XML.Element,
         scope: XLIFF.Scope
     ) throws(XLIFF.Error) -> (XLIFF.Source, XLIFF.Target?) {
         var source: XLIFF.Source?

@@ -57,7 +57,7 @@ extension XLIFF.Validator {
         context: Context
     ) throws(XLIFF.Error) {
         let element: String
-        let namespaces: [W3C_XML::W3C_XML.Namespace]
+        let namespaces: [W3C.XML.Namespace]
         switch part {
         case .segment(let segment):
             element = "segment"

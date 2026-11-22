@@ -28,7 +28,7 @@ extension XLIFF.Inline {
         var result: [XLIFF.Inline] = []
         var run = ""
         for scalar in XLIFF.scalars(text) {
-            if W3C_XML::W3C_XML.isChar(scalar) {
+            if W3C.XML.isChar(scalar) {
                 run.unicodeScalars.append(scalar)
             } else {
                 if !run.isEmpty {

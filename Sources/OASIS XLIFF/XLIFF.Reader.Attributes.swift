@@ -12,9 +12,9 @@ extension XLIFF.Reader {
 
         var xml: [String: String]
 
-        var foreign: [W3C_XML::W3C_XML.Attribute]
+        var foreign: [W3C.XML.Attribute]
 
-        init(_ element: W3C_XML::W3C_XML.Element, scope: XLIFF.Scope) throws(XLIFF.Error) {
+        init(_ element: W3C.XML.Element, scope: XLIFF.Scope) throws(XLIFF.Error) {
             self.element = element.name.local
             self.core = [:]
             self.xml = [:]
@@ -133,12 +133,12 @@ extension XLIFF.Reader.Attributes {
         }
     }
 
-    func extensions(_ namespaces: [W3C_XML::W3C_XML.Namespace]) throws(XLIFF.Error) -> XLIFF.Extensions {
+    func extensions(_ namespaces: [W3C.XML.Namespace]) throws(XLIFF.Error) -> XLIFF.Extensions {
         if let name = core.keys.sorted().first {
             throw .unexpectedAttribute(name, on: element)
         }
-        var attributes: [W3C_XML::W3C_XML.Attribute] = xml.keys.sorted().map { key in
-            W3C_XML::W3C_XML.Attribute(name: W3C_XML::W3C_XML.Name(local: key, prefix: "xml"), value: xml[key] ?? "")
+        var attributes: [W3C.XML.Attribute] = xml.keys.sorted().map { key in
+            W3C.XML.Attribute(name: W3C.XML.Name(local: key, prefix: "xml"), value: xml[key] ?? "")
         }
         attributes += foreign
         return XLIFF.Extensions(namespaces: namespaces, attributes: attributes)

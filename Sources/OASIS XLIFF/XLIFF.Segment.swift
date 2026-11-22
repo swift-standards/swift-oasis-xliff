@@ -12,7 +12,7 @@ extension XLIFF {
 
         public var subState: String?
 
-        public var namespaces: [W3C_XML::W3C_XML.Namespace]
+        public var namespaces: [W3C.XML.Namespace]
 
         public var source: XLIFF.Source
 
@@ -23,7 +23,7 @@ extension XLIFF {
             canResegment: Bool? = nil,
             state: XLIFF.State? = nil,
             subState: String? = nil,
-            namespaces: [W3C_XML::W3C_XML.Namespace] = [],
+            namespaces: [W3C.XML.Namespace] = [],
             source: XLIFF.Source,
             target: XLIFF.Target? = nil
         ) {

@@ -6,7 +6,7 @@ extension XLIFF {
 
         public var id: XLIFF.Identifier?
 
-        public var namespaces: [W3C_XML::W3C_XML.Namespace]
+        public var namespaces: [W3C.XML.Namespace]
 
         public var source: XLIFF.Source
 
@@ -14,7 +14,7 @@ extension XLIFF {
 
         public init(
             id: XLIFF.Identifier? = nil,
-            namespaces: [W3C_XML::W3C_XML.Namespace] = [],
+            namespaces: [W3C.XML.Namespace] = [],
             source: XLIFF.Source,
             target: XLIFF.Target? = nil
         ) {

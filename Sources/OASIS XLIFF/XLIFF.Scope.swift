@@ -17,7 +17,7 @@ extension XLIFF {
 
 extension XLIFF.Scope {
 
-    func adding(_ namespaces: [W3C_XML::W3C_XML.Namespace]) -> Self {
+    func adding(_ namespaces: [W3C.XML.Namespace]) -> Self {
         var copy = self
         for namespace in namespaces {
             if let prefix = namespace.prefix {
@@ -29,23 +29,23 @@ extension XLIFF.Scope {
         return copy
     }
 
-    func element(_ name: W3C_XML::W3C_XML.Name) throws(XLIFF.Error) -> String? {
+    func element(_ name: W3C.XML.Name) throws(XLIFF.Error) -> String? {
         guard let prefix = name.prefix else { return defaultNamespace }
         guard let uri = bindings[prefix] else { throw .undeclaredPrefix(prefix) }
         return uri
     }
 
-    func attribute(_ name: W3C_XML::W3C_XML.Name) throws(XLIFF.Error) -> String? {
+    func attribute(_ name: W3C.XML.Name) throws(XLIFF.Error) -> String? {
         guard let prefix = name.prefix else { return nil }
         guard let uri = bindings[prefix] else { throw .undeclaredPrefix(prefix) }
         return uri
     }
 
-    func isCore(_ element: W3C_XML::W3C_XML.Element) throws(XLIFF.Error) -> Bool {
+    func isCore(_ element: W3C.XML.Element) throws(XLIFF.Error) -> Bool {
         try self.element(element.name) == XLIFF.Namespace.core
     }
 
-    func selfContained(_ element: W3C_XML::W3C_XML.Element) -> W3C_XML::W3C_XML.Element {
+    func selfContained(_ element: W3C.XML.Element) -> W3C.XML.Element {
         var used: Set<String> = []
         var usesDefault = false
         collect(element, into: &used, usesDefault: &usesDefault)
@@ -53,16 +53,16 @@ extension XLIFF.Scope {
         let declared = Set(element.namespaces.map { $0.prefix ?? "" })
         for prefix in used.sorted() where prefix != "xml" && !declared.contains(prefix) {
             if let uri = bindings[prefix] {
-                copy.namespaces.append(W3C_XML::W3C_XML.Namespace(prefix: prefix, uri: uri))
+                copy.namespaces.append(W3C.XML.Namespace(prefix: prefix, uri: uri))
             }
         }
         if usesDefault, !declared.contains(""), let defaultNamespace {
-            copy.namespaces.insert(W3C_XML::W3C_XML.Namespace(uri: defaultNamespace), at: 0)
+            copy.namespaces.insert(W3C.XML.Namespace(uri: defaultNamespace), at: 0)
         }
         return copy
     }
 
-    private func collect(_ element: W3C_XML::W3C_XML.Element, into used: inout Set<String>, usesDefault: inout Bool) {
+    private func collect(_ element: W3C.XML.Element, into used: inout Set<String>, usesDefault: inout Bool) {
         if let prefix = element.name.prefix {
             used.insert(prefix)
         } else {

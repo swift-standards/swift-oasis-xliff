@@ -2,8 +2,8 @@ import W3C_XML
 
 extension XLIFF.Writer {
 
-    func inline(_ content: [XLIFF.Inline]) -> [W3C_XML::W3C_XML.Content] {
-        var result: [W3C_XML::W3C_XML.Content] = []
+    func inline(_ content: [XLIFF.Inline]) -> [W3C.XML.Content] {
+        var result: [W3C.XML.Content] = []
         for item in content {
             switch item {
             case .text(let text):
@@ -127,20 +127,20 @@ extension XLIFF.Writer {
         attributes.add("canReorder", canReorder)
     }
 
-    func codePoint(_ point: XLIFF.CodePoint) -> W3C_XML::W3C_XML.Element {
+    func codePoint(_ point: XLIFF.CodePoint) -> W3C.XML.Element {
         var attributes = Attributes()
         attributes.add("hex", point.hex)
-        return W3C_XML::W3C_XML.Element(name: W3C_XML::W3C_XML.Name(local: "cp"), attributes: attributes.list)
+        return W3C.XML.Element(name: W3C.XML.Name(local: "cp"), attributes: attributes.list)
     }
 
     func element(
         _ name: String,
         _ attributes: Attributes,
         _ extensions: XLIFF.Extensions,
-        content: [W3C_XML::W3C_XML.Content] = []
-    ) -> W3C_XML::W3C_XML.Element {
-        W3C_XML::W3C_XML.Element(
-            name: W3C_XML::W3C_XML.Name(local: name),
+        content: [W3C.XML.Content] = []
+    ) -> W3C.XML.Element {
+        W3C.XML.Element(
+            name: W3C.XML.Name(local: name),
             attributes: attributes.list + extensions.attributes,
             content: content,
             namespaces: Self.prefixed(extensions.namespaces)

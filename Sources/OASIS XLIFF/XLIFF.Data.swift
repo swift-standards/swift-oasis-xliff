@@ -10,7 +10,7 @@ extension XLIFF {
 
         public var space: XLIFF.Space?
 
-        public var namespaces: [W3C_XML::W3C_XML.Namespace]
+        public var namespaces: [W3C.XML.Namespace]
 
         public var content: [XLIFF.Inline]
 
@@ -18,7 +18,7 @@ extension XLIFF {
             id: XLIFF.Identifier,
             direction: XLIFF.Direction? = nil,
             space: XLIFF.Space? = nil,
-            namespaces: [W3C_XML::W3C_XML.Namespace] = [],
+            namespaces: [W3C.XML.Namespace] = [],
             content: [XLIFF.Inline] = []
         ) {
             self.id = id
