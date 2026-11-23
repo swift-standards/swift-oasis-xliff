@@ -33,8 +33,8 @@ extension `XLIFF.Document Tests`.Test.Unit {
     @Test
     func `a document built from source and target pairs reads back its targets by unit id`() throws {
         let document = try XLIFF.Document(
-            source: BCP47.LanguageTag("en"),
-            target: BCP47.LanguageTag("nl"),
+            source: BCP47.Tag("en"),
+            target: BCP47.Tag("nl"),
             units: [
                 XLIFF.Unit(id: "browse", source: "Browse", target: "Bladeren"),
                 XLIFF.Unit(id: "apps", source: "Apps"),
@@ -51,8 +51,8 @@ extension `XLIFF.Document Tests`.Test.Unit {
     @Test
     func `the builder writes one file with one segment per unit`() throws {
         let document = try XLIFF.Document(
-            source: BCP47.LanguageTag("en"),
-            target: BCP47.LanguageTag("nl"),
+            source: BCP47.Tag("en"),
+            target: BCP47.Tag("nl"),
             units: [XLIFF.Unit(id: "browse", source: "Browse", target: "Bladeren")]
         )
         let text = String(decoding: document.bytes, as: UTF8.self)
@@ -77,15 +77,15 @@ extension `XLIFF.Document Tests`.Test.Unit {
     func `the builder refuses units that break a constraint`() {
         #expect(throws: XLIFF.Error.duplicateIdentifier("a", element: "unit")) {
             try XLIFF.Document(
-                source: BCP47.LanguageTag("en"),
-                target: BCP47.LanguageTag("nl"),
+                source: BCP47.Tag("en"),
+                target: BCP47.Tag("nl"),
                 units: [XLIFF.Unit(id: "a", source: "One"), XLIFF.Unit(id: "a", source: "Two")]
             )
         }
         #expect(throws: XLIFF.Error.invalidValue("a b", attribute: "id", on: "unit")) {
             try XLIFF.Document(
-                source: BCP47.LanguageTag("en"),
-                target: BCP47.LanguageTag("nl"),
+                source: BCP47.Tag("en"),
+                target: BCP47.Tag("nl"),
                 units: [XLIFF.Unit(id: "a b", source: "One")]
             )
         }
@@ -109,8 +109,8 @@ extension `XLIFF.Document Tests`.Test.Unit {
             )
         )
         #expect(document.version == .v2_1)
-        #expect(document.sourceLanguage == (try BCP47.LanguageTag("en")))
-        #expect(document.targetLanguage == (try BCP47.LanguageTag("nl")))
+        #expect(document.sourceLanguage == (try BCP47.Tag("en")))
+        #expect(document.targetLanguage == (try BCP47.Tag("nl")))
         let file = try #require(document.files.first)
         #expect(file.notes == [XLIFF.Note("File note", id: "n1", subject: .source, category: "ui", priority: 2)])
         guard case .group(let group) = file.nodes.first, case .unit(let unit) = group.nodes.first,
@@ -320,8 +320,8 @@ extension `XLIFF.Document Tests`.Test.`Edge Case` {
     @Test
     func `characters XML cannot hold are written as cp and read back as text characters stay`() throws {
         let document = try XLIFF.Document(
-            source: BCP47.LanguageTag("en"),
-            target: BCP47.LanguageTag("nl"),
+            source: BCP47.Tag("en"),
+            target: BCP47.Tag("nl"),
             units: [XLIFF.Unit(id: "u", source: "Ctrl+C=\u{3}")]
         )
         let text = String(decoding: document.bytes, as: UTF8.self)

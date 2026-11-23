@@ -5,7 +5,7 @@ extension XLIFF {
 
     public struct Source: Sendable, Hashable {
 
-        public var language: BCP47.LanguageTag?
+        public var language: BCP47.Tag?
 
         public var space: XLIFF.Space?
 
@@ -14,7 +14,7 @@ extension XLIFF {
         public var content: [XLIFF.Inline]
 
         public init(
-            language: BCP47.LanguageTag? = nil,
+            language: BCP47.Tag? = nil,
             space: XLIFF.Space? = nil,
             namespaces: [W3C.XML.Namespace] = [],
             content: [XLIFF.Inline] = []

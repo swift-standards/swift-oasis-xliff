@@ -1,6 +1,6 @@
 # swift-oasis-xliff
 
-Use this package when you hand words to translators and take their translations back in XLIFF 2.1, the OASIS XML Localisation Interchange File Format. Build a document from source and target pairs with `XLIFF.Document(source:target:file:units:)` and `XLIFF.Unit(id:source:target:)`, write it with `document.bytes`, read the translated file with `XLIFF.Document(parsing:)`, and take the translations by unit id from `document.targets` or `document.target(of:)`. The document is a tree of typed values, from `XLIFF.File`, `XLIFF.Group` and `XLIFF.Unit` down to `XLIFF.Segment`, `XLIFF.Source`, `XLIFF.Target`, `XLIFF.Note` and the inline content `XLIFF.Inline`; languages are `BCP47.LanguageTag`, and swift-w3c-xml reads and writes the XML.
+Use this package when you hand words to translators and take their translations back in XLIFF 2.1, the OASIS XML Localisation Interchange File Format. Build a document from source and target pairs with `XLIFF.Document(source:target:file:units:)` and `XLIFF.Unit(id:source:target:)`, write it with `document.bytes`, read the translated file with `XLIFF.Document(parsing:)`, and take the translations by unit id from `document.targets` or `document.target(of:)`. The document is a tree of typed values, from `XLIFF.File`, `XLIFF.Group` and `XLIFF.Unit` down to `XLIFF.Segment`, `XLIFF.Source`, `XLIFF.Target`, `XLIFF.Note` and the inline content `XLIFF.Inline`; languages are `BCP47.Tag`, and swift-w3c-xml reads and writes the XML.
 
 ## Laws
 

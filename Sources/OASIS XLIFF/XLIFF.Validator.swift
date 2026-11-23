@@ -250,7 +250,7 @@ extension XLIFF.Validator {
         }
     }
 
-    func matches(_ lhs: BCP47.LanguageTag, _ rhs: BCP47.LanguageTag) -> Bool {
+    func matches(_ lhs: BCP47.Tag, _ rhs: BCP47.Tag) -> Bool {
         lhs.value.lowercased() == rhs.value.lowercased()
     }
 }

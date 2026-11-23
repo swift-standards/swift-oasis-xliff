@@ -100,10 +100,10 @@ extension XLIFF.Reader.Attributes {
         return result
     }
 
-    mutating func language(_ value: String?, attribute name: String) throws(XLIFF.Error) -> BCP47.LanguageTag? {
+    mutating func language(_ value: String?, attribute name: String) throws(XLIFF.Error) -> BCP47.Tag? {
         guard let value else { return nil }
         do {
-            return try BCP47.LanguageTag(value)
+            return try BCP47.Tag(value)
         } catch {
             throw .invalidValue(value, attribute: name, on: element)
         }
@@ -117,7 +117,7 @@ extension XLIFF.Reader.Attributes {
         return space
     }
 
-    mutating func xmlLanguage() throws(XLIFF.Error) -> BCP47.LanguageTag? {
+    mutating func xmlLanguage() throws(XLIFF.Error) -> BCP47.Tag? {
         try language(xml.removeValue(forKey: "lang"), attribute: "xml:lang")
     }
 

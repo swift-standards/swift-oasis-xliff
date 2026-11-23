@@ -6,7 +6,7 @@ extension XLIFF.Validator {
 
         var scope: XLIFF.Scope
 
-        var language: BCP47.LanguageTag?
+        var language: BCP47.Tag?
 
         var file: XLIFF.Identifier
 

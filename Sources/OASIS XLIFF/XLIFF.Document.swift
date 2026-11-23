@@ -7,13 +7,13 @@ extension XLIFF {
 
         public var version: XLIFF.Version
 
-        public var sourceLanguage: BCP47.LanguageTag
+        public var sourceLanguage: BCP47.Tag
 
-        public var targetLanguage: BCP47.LanguageTag?
+        public var targetLanguage: BCP47.Tag?
 
         public var space: XLIFF.Space?
 
-        public var language: BCP47.LanguageTag?
+        public var language: BCP47.Tag?
 
         public var extensions: XLIFF.Extensions
 
@@ -25,10 +25,10 @@ extension XLIFF {
 
         public init(
             version: XLIFF.Version = .v2_1,
-            sourceLanguage: BCP47.LanguageTag,
-            targetLanguage: BCP47.LanguageTag? = nil,
+            sourceLanguage: BCP47.Tag,
+            targetLanguage: BCP47.Tag? = nil,
             space: XLIFF.Space? = nil,
-            language: BCP47.LanguageTag? = nil,
+            language: BCP47.Tag? = nil,
             extensions: XLIFF.Extensions = XLIFF.Extensions(),
             files: [XLIFF.File],
             prologue: [W3C.XML.Content] = [],
@@ -50,8 +50,8 @@ extension XLIFF {
 extension XLIFF.Document {
 
     public init(
-        source: BCP47.LanguageTag,
-        target: BCP47.LanguageTag,
+        source: BCP47.Tag,
+        target: BCP47.Tag,
         file: XLIFF.Identifier = "f1",
         units: [XLIFF.Unit]
     ) throws(XLIFF.Error) {

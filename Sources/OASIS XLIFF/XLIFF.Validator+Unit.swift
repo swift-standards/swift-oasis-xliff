@@ -53,7 +53,7 @@ extension XLIFF.Validator {
         _ part: XLIFF.Unit.Part,
         unit: XLIFF.Unit,
         scope outer: XLIFF.Scope,
-        language: BCP47.LanguageTag?,
+        language: BCP47.Tag?,
         context: Context
     ) throws(XLIFF.Error) {
         let element: String

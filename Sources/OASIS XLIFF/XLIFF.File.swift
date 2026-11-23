@@ -19,7 +19,7 @@ extension XLIFF {
 
         public var space: XLIFF.Space?
 
-        public var language: BCP47.LanguageTag?
+        public var language: BCP47.Tag?
 
         public var skeleton: XLIFF.Skeleton?
 
@@ -37,7 +37,7 @@ extension XLIFF {
             sourceDirection: XLIFF.Direction? = nil,
             targetDirection: XLIFF.Direction? = nil,
             space: XLIFF.Space? = nil,
-            language: BCP47.LanguageTag? = nil,
+            language: BCP47.Tag? = nil,
             skeleton: XLIFF.Skeleton? = nil,
             extensions: XLIFF.Extensions = XLIFF.Extensions(),
             notes: [XLIFF.Note] = [],
